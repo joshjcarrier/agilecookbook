@@ -204,8 +204,8 @@
                             <span class="help-block">{{setting.help}}</span>
                         </div>
                         <div class="col-sm-8">
-                            <div class="help-block" ng-repeat="settingValue in setting.values">
-                                <span ng-class="settingValue == setting.selectedValue ? 'strong' : ''">{{settingValue.name}}</span> - <span ng-bind-html="settingValue.help" />
+                            <div class="help-block" ng-repeat="settingValue in setting.values" ng-class="settingValue == setting.selectedValue ? 'show' : 'visible-print-block'">
+                                <strong>{{settingValue.name}}</strong> - <span ng-bind-html="settingValue.help" />
                             </div>
                         </div>
                     </div>
