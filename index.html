@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" ng-app="agileCookbookApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="author" content="Josh Carrier">
+
+    <title>Agile Cookbook</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.2.0/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-animate.min.js"></script>
+
+    <script>
+        var agileCookbookApp = angular.module('agileCookbookApp', [])
+            .config(function($sceProvider) {
+                  // Completely disable SCE.  For demonstration purposes only!
+                  // Do not use in new projects.
+                  $sceProvider.enabled(false);
+        });
+
+        agileCookbookApp.controller('RecipeCtrl', function ($scope) {
+            $scope.sections = [
+            {
+                'name': 'Structure',
+                'settings': [
+                    {
+                        'name': 'Formation',
+                        'help': 'How should the team form?',
+                        'values': [
+                            {
+                                'name': 'Dynamic',
+                                'help': 'This is the description <a href="http://bing.com">Test</a>'
+                            },
+                            {
+                                'name': 'Static',
+                                'help': 'This is another description <a href="http://bing.com">Test</a>'
+                            }
+                        ]
+                    },
+                    {
+                        'name': 'Team size',
+                        'help': 'How big should the immediate team be?',
+                        'values': [
+                            {
+                                'name': 'Small',
+                                'help': 'This is the description <a href="http://bing.com">Test</a>'
+                            },
+                            {
+                                'name': 'Large',
+                                'help': 'This is another description <a href="http://bing.com">Test</a>'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                'name': 'Planning',
+                'settings': [
+                    {
+                        'name': 'Cost estimation',
+                        'help': 'How should the team track its velocity?',
+                        'values': [
+                            {
+                                'name': '#NoEstimates',
+                                'help': 'This is the description <a href="http://bing.com">Test</a>'
+                            },
+                            {
+                                'name': 'Story points',
+                                'help': 'This is another description <a href="http://bing.com">Test</a>'
+                            }
+                        ]
+                    }
+                ]
+            }
+          ];
+
+          $scope.setSelected = function(setting, value) {
+              setting.selectedValue = value;
+          };
+        });
+    </script>
+</head>
+<body ng-controller="RecipeCtrl">
+
+    <div class="container">
+        <div class="row">
+            <h1>Agile Cookbook <small>AN INTERACTIVE GUIDE</small></h1>
+            <br/>
+        </div>
+        <div ng-repeat="section in sections" class="panel panel-default">
+            <div class="panel-heading">
+                <h3>{{section.name}}<h3>
+            </div>
+            <ul class="list-group">
+                <li ng-repeat="setting in section.settings" class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4>{{setting.name}}</h4>
+                        </div>
+                        <div class="col-sm-8 hidden-print">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-default" ng-repeat="settingValue in setting.values" ng-click="setSelected(setting, settingValue)">
+                                    <input type="radio"
+                                            name="{{setting.name}}"
+                                            id="{{settingValue.name}}"/>&nbsp;&nbsp;{{settingValue.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <span class="help-block">{{setting.help}}</span>
+                        </div>
+                        <div class="col-sm-8" ng-repeat="settingValue in setting.values" ng-class="settingValue == setting.selectedValue ? 'show' : 'hidden'">
+                            <div class="help-block"><strong>{{settingValue.name}}</strong> - <span ng-bind-html="settingValue.help" /></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <footer style="width:100%;">
+        <div class="text-center" style="width: 100%; padding-left: 10px; color: #999999;text-transform:none;text-shadow:none">
+            &copy; 2014 <a href="http://joshjcarrier.com">Josh Carrier</a> &middot;
+            <small>Made possible with <a href="http://angularjs.org/">AngularJS</a> and <a href="http://getbootstrap.com/">Bootstrap</a> &middot; <a href="license-ext.txt">Open source licenses</a></small>
+        </div>
+    </footer>
+</body>
+</html>
